@@ -64,6 +64,14 @@ public class AdminLoginController {
         return ResponseResult.okResult(new RouterVO(menuList));
     }
 
+    @PostMapping("/user/logout")
+    public ResponseResult logout() {
+        //获取当前用户信息
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        Long id = loginUser.getUser().getId();
+        return adminLoginService.logout(id);
+    }
+
 
 
 }

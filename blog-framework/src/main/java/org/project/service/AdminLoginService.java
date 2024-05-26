@@ -7,4 +7,5 @@ public interface AdminLoginService {
     ResponseResult login(User user);
 
 
+    ResponseResult logout(Long id);
 }

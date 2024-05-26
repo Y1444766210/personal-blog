@@ -52,5 +52,11 @@ public class AdminLoginServiceImpl implements AdminLoginService {
         return ResponseResult.okResult(map);
     }
 
+    @Override
+    public ResponseResult logout(Long id) {
+        redisCache.deleteObject("adminlogin:" + id);
+        return ResponseResult.okResult();
+    }
+
 
 }
