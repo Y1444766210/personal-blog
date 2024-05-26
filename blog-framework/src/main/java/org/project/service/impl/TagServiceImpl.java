@@ -69,6 +69,15 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     }
 
     @Override
+    public ResponseResult listAllTag() {
+        List<Tag> tagList = list();
+        List<TagVO> tags = tagList.stream()
+                .map(tag -> BeanCopyUtils.copyBean(tag, TagVO.class))
+                .collect(Collectors.toList());
+        return ResponseResult.okResult(tags);
+    }
+
+    @Override
     public ResponseResult addTag(TagDTO tagDTO) {
         Tag tag = BeanCopyUtils.copyBean(tagDTO, Tag.class);
         tag.setCreateTime(DateTime.now());

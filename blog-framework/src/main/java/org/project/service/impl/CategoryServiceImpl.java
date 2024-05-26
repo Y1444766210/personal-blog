@@ -6,6 +6,7 @@ import org.project.constants.SystemConstants;
 import org.project.domain.ResponseResult;
 import org.project.domain.entity.Article;
 import org.project.domain.entity.Category;
+import org.project.domain.vo.CategoryListVO;
 import org.project.domain.vo.CategoryVo;
 import org.project.mapper.CategoryMapper;
 import org.project.service.ArticleService;
@@ -55,5 +56,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         }
 
         return ResponseResult.okResult(categoryVos);
+    }
+
+    @Override
+    public ResponseResult listAllCategory() {
+        List<Category> categorylist = list();
+        List<CategoryListVO> resultlist = categorylist.stream()
+                .map(category -> BeanCopyUtils.copyBean(category, CategoryListVO.class))
+                .collect(Collectors.toList());
+        return ResponseResult.okResult(resultlist);
     }
 }

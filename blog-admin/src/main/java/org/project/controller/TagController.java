@@ -33,5 +33,10 @@ public class TagController {
         return tagService.editTag(id, tagDTO);
     }
 
+    @GetMapping("/listAllTag")
+    public ResponseResult listAllTag() {
+        return tagService.listAllTag();
+    }
+
 
 }

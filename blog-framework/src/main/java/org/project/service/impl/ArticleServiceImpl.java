@@ -1,10 +1,15 @@
 package org.project.service.impl;
 
 
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.unit.DataSizeUtil;
+import cn.hutool.core.io.unit.DataUnit;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.project.domain.ResponseResult;
+import org.project.domain.dto.ArticleDTO;
 import org.project.domain.entity.Article;
 import org.project.domain.entity.Category;
 import org.project.domain.vo.ArticleDetailVo;
@@ -102,6 +107,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public ResponseResult updateViewCount(Long id) {
         //将对应浏览量+1
         redisCache.incrementCacheMapValue("article:viewCount", id.toString(), 1);
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult addArticle(ArticleDTO articleDTO) {
+        Article article = BeanCopyUtils.copyBean(articleDTO, Article.class);
+        article.setCreateTime(DateTime.now());
+        save(article);
         return ResponseResult.okResult();
     }
 }
