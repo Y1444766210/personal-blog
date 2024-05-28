@@ -18,4 +18,9 @@ public class ContentCategoryController {
     public ResponseResult listAllCategory() {
         return categoryService.listAllCategory();
     }
+
+    @GetMapping("/export")
+    public ResponseResult exportCategory() {
+        return categoryService.exportCategory();
+    }
 }
