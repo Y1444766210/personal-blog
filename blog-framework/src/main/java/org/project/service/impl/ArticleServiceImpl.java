@@ -12,10 +12,7 @@ import org.project.domain.ResponseResult;
 import org.project.domain.dto.ArticleDTO;
 import org.project.domain.entity.Article;
 import org.project.domain.entity.Category;
-import org.project.domain.vo.ArticleDetailVo;
-import org.project.domain.vo.ArticleListVo;
-import org.project.domain.vo.HotArticleVo;
-import org.project.domain.vo.PageVo;
+import org.project.domain.vo.*;
 import org.project.mapper.ArticleMapper;
 import org.project.service.ArticleService;
 import org.project.service.CategoryService;
@@ -116,5 +113,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         article.setCreateTime(DateTime.now());
         save(article);
         return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult getArticleList(Integer pageNum, Integer pageSize, String title, String summary) {
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(title != null, Article::getTitle, title);
+        queryWrapper.eq(summary != null, Article::getSummary, summary);
+        Page<Article> page = new Page<>(pageNum, pageSize);
+        List<Article> articles = page(page, queryWrapper).getRecords();
+        List<ArticleListAdminVO> result;
+        try {
+            result = BeanCopyUtils.copyBeanList(articles, ArticleListAdminVO.class);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        PageVo pageVo = new PageVo(result, page.getTotal());
+        return ResponseResult.okResult(pageVo);
     }
 }
