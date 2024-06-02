@@ -28,9 +28,14 @@ public class TagController {
         return tagService.removeTag(id);
     }
 
-    @PutMapping("/{id}")
-    public ResponseResult editTag(@PathVariable String id, @RequestBody TagDTO tagDTO) {
-        return tagService.editTag(id, tagDTO);
+    @GetMapping("/{id}")
+    public ResponseResult getTag(@PathVariable String id) {
+        return tagService.getTag(id);
+    }
+
+    @PutMapping
+    public ResponseResult editTag(@RequestBody TagDTO tagDTO) {
+        return tagService.editTag(tagDTO);
     }
 
     @GetMapping("/listAllTag")

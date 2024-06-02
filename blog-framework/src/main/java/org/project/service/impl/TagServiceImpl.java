@@ -1,11 +1,9 @@
 package org.project.service.impl;
 
 import cn.hutool.core.date.DateTime;
-import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.project.constants.SystemConstants;
 import org.project.domain.ResponseResult;
 import org.project.domain.dto.TagDTO;
 import org.project.domain.entity.Tag;
@@ -14,13 +12,10 @@ import org.project.domain.vo.TagVO;
 import org.project.mapper.TagMapper;
 import org.project.service.TagService;
 import org.project.utils.BeanCopyUtils;
-import org.project.utils.SecurityUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 /**
@@ -59,9 +54,9 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     }
 
     @Override
-    public ResponseResult editTag(String id, TagDTO tagDTO) {
+    public ResponseResult editTag(TagDTO tagDTO) {
         LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Tag::getId, id);
+        queryWrapper.eq(Tag::getId, tagDTO.getId());
         Tag tag = BeanCopyUtils.copyBean(tagDTO, Tag.class);
         tag.setUpdateTime(DateTime.now());
         update(tag, queryWrapper);
@@ -75,6 +70,13 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
                 .map(tag -> BeanCopyUtils.copyBean(tag, TagVO.class))
                 .collect(Collectors.toList());
         return ResponseResult.okResult(tags);
+    }
+
+    @Override
+    public ResponseResult getTag(String id) {
+        Tag tag = getById(id);
+        TagVO tagVO = BeanCopyUtils.copyBean(tag, TagVO.class);
+        return ResponseResult.okResult(tagVO);
     }
 
     @Override
