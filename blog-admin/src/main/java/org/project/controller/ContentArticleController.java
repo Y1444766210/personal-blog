@@ -39,4 +39,9 @@ public class ContentArticleController {
     public ResponseResult updateArticle(@RequestBody ArticleAdminDTO articleAdminDTO) {
         return articleService.updateArticle(articleAdminDTO);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseResult deleteArticle(@PathVariable Long id) {
+        return articleService.deleteArticle(id);
+    }
 }
