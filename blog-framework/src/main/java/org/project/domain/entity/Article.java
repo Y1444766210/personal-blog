@@ -28,7 +28,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @TableName("sg_article")
 public class Article {
 
-    @TableId
+    @TableId(value = "id")
     private Long id;
 //标题
     private String title;

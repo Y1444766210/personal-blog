@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.project.mapper.ArticleMapper">
+    <select id="selectTagByArticleId" resultType="java.lang.String">
+        SELECT
+            at.tag_id
+        FROM
+            sg_article_tag at
+        WHERE
+            at.article_id = #{id}
+    </select>
+</mapper>

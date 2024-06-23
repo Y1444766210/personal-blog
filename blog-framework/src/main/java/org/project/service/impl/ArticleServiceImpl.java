@@ -12,6 +12,7 @@ import org.project.domain.ResponseResult;
 import org.project.domain.dto.ArticleDTO;
 import org.project.domain.entity.Article;
 import org.project.domain.entity.Category;
+import org.project.domain.entity.Tag;
 import org.project.domain.vo.*;
 import org.project.mapper.ArticleMapper;
 import org.project.service.ArticleService;
@@ -34,6 +35,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Autowired
     private RedisCache redisCache;
+
+    @Autowired
+    private ArticleMapper articleMapper;
 
     @Override
     public ResponseResult hostArticleList() {
@@ -132,5 +136,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         PageVo pageVo = new PageVo(result, page.getTotal());
         return ResponseResult.okResult(pageVo);
+    }
+
+    @Override
+    public ResponseResult getArticle(Long id) {
+        Article article = getById(id);
+        ArticleEditVO articleEditVO = BeanCopyUtils.copyBean(article, ArticleEditVO.class);
+        List<String> tags = this.getBaseMapper().selectTagByArticleId(id);
+        articleEditVO.setTags(tags);
+        return ResponseResult.okResult(articleEditVO);
     }
 }

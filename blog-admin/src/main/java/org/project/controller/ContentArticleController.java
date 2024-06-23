@@ -22,4 +22,15 @@ public class ContentArticleController {
     public ResponseResult getArticleList(Integer pageNum, Integer pageSize, String title, String summary) {
         return articleService.getArticleList(pageNum, pageSize, title, summary);
     }
+
+    /**
+     * 查询文章详情
+     *
+     * @param id 文章id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public ResponseResult getArticle(@PathVariable Long id) {
+        return articleService.getArticle(id);
+    }
 }

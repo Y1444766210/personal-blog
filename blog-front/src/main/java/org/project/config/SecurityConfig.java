@@ -48,6 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/userInfo").authenticated()
                 //头像上传需要登录才能实现
                 //.antMatchers("/upload").authenticated()
+                // 添加评论接口需要登录才能实现
+                .antMatchers("/comment").authenticated()
                 // 除上面外的所有请求全部不需要认证即可访问
                 .anyRequest().permitAll();
 

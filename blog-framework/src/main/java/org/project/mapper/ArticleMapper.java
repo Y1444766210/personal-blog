@@ -1,7 +1,11 @@
 package org.project.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.project.domain.entity.Article;
+import org.project.domain.entity.Tag;
+
+import java.util.List;
 
 
 /**
@@ -12,5 +16,6 @@ import org.project.domain.entity.Article;
  */
 public interface ArticleMapper extends BaseMapper<Article> {
 
+    List<String> selectTagByArticleId(Long id);
 }
 
