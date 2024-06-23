@@ -2,6 +2,7 @@ package org.project.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.project.domain.ResponseResult;
+import org.project.domain.dto.ArticleAdminDTO;
 import org.project.domain.dto.ArticleDTO;
 import org.project.domain.entity.Article;
 
@@ -20,4 +21,6 @@ public interface ArticleService extends IService<Article> {
     ResponseResult getArticleList(Integer pageNum, Integer pageSize, String title, String summary);
 
     ResponseResult getArticle(Long id);
+
+    ResponseResult updateArticle(ArticleAdminDTO articleAdminDTO);
 }

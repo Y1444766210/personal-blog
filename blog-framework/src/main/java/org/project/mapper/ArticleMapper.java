@@ -17,5 +17,7 @@ import java.util.List;
 public interface ArticleMapper extends BaseMapper<Article> {
 
     List<String> selectTagByArticleId(Long id);
+
+    void addTagsByArticleID(@Param("articleId") Long articleId,@Param("tagId") Long tagId);
 }
 

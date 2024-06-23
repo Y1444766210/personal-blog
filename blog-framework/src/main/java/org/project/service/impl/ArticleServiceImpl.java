@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.project.domain.ResponseResult;
+import org.project.domain.dto.ArticleAdminDTO;
 import org.project.domain.dto.ArticleDTO;
 import org.project.domain.entity.Article;
 import org.project.domain.entity.Category;
@@ -18,6 +19,7 @@ import org.project.mapper.ArticleMapper;
 import org.project.service.ArticleService;
 import org.project.service.CategoryService;
 import org.project.utils.RedisCache;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.project.utils.BeanCopyUtils;
@@ -145,5 +147,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<String> tags = this.getBaseMapper().selectTagByArticleId(id);
         articleEditVO.setTags(tags);
         return ResponseResult.okResult(articleEditVO);
+    }
+
+    @Override
+    public ResponseResult updateArticle(ArticleAdminDTO articleAdminDTO) {
+        Article article = BeanCopyUtils.copyBean(articleAdminDTO, Article.class);
+        Long articleId = articleAdminDTO.getId();
+        updateById(article);
+        List<String> tags = baseMapper.selectTagByArticleId(articleId);
+        for (String tag : articleAdminDTO.getTags()) {
+            if (!tags.contains(tag)) {
+                this.baseMapper.addTagsByArticleID(articleId, Long.valueOf(tag));
+            }
+        }
+        return ResponseResult.okResult();
     }
 }

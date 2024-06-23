@@ -1,6 +1,7 @@
 package org.project.controller;
 
 import org.project.domain.ResponseResult;
+import org.project.domain.dto.ArticleAdminDTO;
 import org.project.domain.dto.ArticleDTO;
 import org.project.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,10 @@ public class ContentArticleController {
     @GetMapping("/{id}")
     public ResponseResult getArticle(@PathVariable Long id) {
         return articleService.getArticle(id);
+    }
+
+    @PutMapping
+    public ResponseResult updateArticle(@RequestBody ArticleAdminDTO articleAdminDTO) {
+        return articleService.updateArticle(articleAdminDTO);
     }
 }
