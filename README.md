@@ -16,13 +16,13 @@
 
 ![image-20240629121848444](C:\Users\mark\AppData\Roaming\Typora\typora-user-images\image-20240629121848444.png)
 
-**路径2：**blog-framework/src/main/resources/application.properties
+**路径2**：blog-framework/src/main/resources/application.properties
 
 该配置为阿里云OSS配置，主要用于存储系统中图片信息，将参数修改为自己的配置
 
 ![image-20240629122101048](C:\Users\mark\AppData\Roaming\Typora\typora-user-images\image-20240629122101048.png)
 
-**路径3：**blog-admin/src/main/resources/application.yml
+**路径3**：blog-admin/src/main/resources/application.yml
 
 该配置为博客后台系统（即修改博文等页面）配置，修改MySQL、Redis配置（可参考路径1配置）
 
